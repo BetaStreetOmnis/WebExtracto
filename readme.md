@@ -39,3 +39,16 @@
 ### 🔧 安装步骤
 
 1. 克隆代码库:
+   ```
+   git clone git@github.com:BetaStreetOmnis/WebAIExtracto.git
+   ```
+
+2. 安装依赖:
+   ```
+   pip install -r requirements.txt
+   ```
+
+3. 运行api_server.py:
+   ```
+   python api_server.py
+   ```
