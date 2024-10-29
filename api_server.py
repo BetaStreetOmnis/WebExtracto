@@ -9,8 +9,8 @@ import uvicorn
 
 from core.website_extract import WebInfo
 from core.website_analyzer import WebsiteAnalyzer
-from core.search_engine import SearchEngineTool
-from core.parse_webpage import WebPageParser
+from core.search_engine.search_engine_tool import SearchEngineTool
+from core.parse_webpage.get_webpage_info import WebPageParser
 
 app = FastAPI(title="网站内容提取API")
 
@@ -96,4 +96,4 @@ async def analyze_website(request: WebsiteRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
-    uvicorn.run("api_server:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("api_server:app", host="0.0.0.0", port=8093, reload=True)

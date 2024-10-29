@@ -8,4 +8,11 @@ pydantic==1.8.2
 python-dotenv==0.19.0
 requests==2.25.1
 selenium==4.1.0
-minify-html==0.11.1
+minify_html==0.15.0
+duckduckgo_search==6.3.3
+newspaper3k==0.2.8
+fake-useragent==1.5.1
+webdriver-manager==4.0.2
+lxml_html_clean==0.3.1
+
+
