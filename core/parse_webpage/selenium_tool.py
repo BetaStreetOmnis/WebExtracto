@@ -5,6 +5,8 @@ from webdriver_manager.firefox import GeckoDriverManager
 from bs4 import BeautifulSoup
 import logging
 import time
+import shutil
+import platform
 
 # 配置日志
 logging.basicConfig(level=logging.INFO)
@@ -22,6 +24,9 @@ class SeleniumTool:
             webdriver.Firefox: Firefox浏览器实例
         """
         try:
+            # 检查Firefox是否安装
+            self._check_firefox_installation()
+            
             options = webdriver.FirefoxOptions()
             options.add_argument('--headless')  # 无头模式
             options.add_argument('--disable-gpu')
@@ -48,6 +53,24 @@ class SeleniumTool:
         except Exception as e:
             logger.error(f"初始化浏览器失败: {str(e)}")
             raise
+
+    def _check_firefox_installation(self):
+        """检查Firefox浏览器是否已安装"""
+        system = platform.system()
+        if system == "Windows":
+            firefox_path = shutil.which("firefox.exe")
+        else:  # Linux 和 MacOS
+            firefox_path = shutil.which("firefox")
+            
+        if not firefox_path:
+            error_msg = (
+                "未检测到Firefox浏览器。请先安装Firefox浏览器。\n"
+                "Windows: https://www.mozilla.org/zh-CN/firefox/windows/\n"
+                "Linux: 使用包管理器安装 firefox\n"
+                "MacOS: https://www.mozilla.org/zh-CN/firefox/mac/"
+            )
+            logger.error(error_msg)
+            raise RuntimeError(error_msg)
 
     def get_page_soup(self, url: str) -> BeautifulSoup:
         """

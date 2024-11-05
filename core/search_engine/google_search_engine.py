@@ -9,12 +9,13 @@ class GoogleSearchEngine:
         try:
             results = []
             for result in search(self.keyword, num_results=self.max_results, advanced=True):
-                print(result)
+                print(112233, result.url, result.title, result.description)
                 results.append({
                     'url': result.url,
                     'title': result.title,
                     'description': result.description
                 })
+            print(444444, results)
             return results
         except Exception as e:
             print(f"Error fetching {e}")

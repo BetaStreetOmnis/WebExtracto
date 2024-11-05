@@ -57,25 +57,27 @@ class SearchEngineTool:
                 # DuckDuckGo搜索结果已经是正确格式,直接返回
                 return results
                 
-            if not isinstance(results, dict):
-                logger.error("搜索结果格式错误: 期望字典类型")
-                return []
-                
-            formatted_results = []
+            
             
             if self.engine_name == 'google':
                 # Google搜索结果格式处理
-                if not all(key in results for key in ['url', 'title', 'description']):
-                    logger.error("Google搜索结果缺少必要的键: url、title 或 description")
-                    return []
-                    
-                for url, title, desc in zip(results['url'], results['title'], results['description']):
-                    formatted_results.append({
-                        'href': url,
-                        'title': title, 
-                        'description': desc
-                    })
+                
+                    # logger.error("Google搜索结果缺少必要的键: url、title 或 description")
+                return results
+                                
+                # for url, title, desc in zip(results['url'], results['title'], results['description']):
+                #     formatted_results.append({
+                #         'href': url,
+                #         'title': title, 
+                #         'description': desc
+                #     })
+
             else:
+                if not isinstance(results, dict):
+                    logger.error("搜索结果格式错误: 期望字典类型")
+                    return []
+                
+                formatted_results = []
                 # Bing等其他搜索引擎结果格式处理
                 if not all(key in results for key in ['url', 'title', 'description']):
                     logger.error("搜索结果缺少必要的键: url、title 或 description")
@@ -88,13 +90,10 @@ class SearchEngineTool:
                         'description': desc
                     })
                     
-            return formatted_results
+                return formatted_results
             
         except Exception as e:
             logger.error(f"搜索过程发生错误: {str(e)}")
             return []
 
-if __name__ == "__main__":
-    search_tools = SearchEngineTool(keyword="duckduckgo",engine_name="bing", filter_text_len=10)
-    res = search_tools.search_answer()
-    print(res)
+
