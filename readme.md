@@ -205,11 +205,10 @@ curl -X POST "http://localhost:8093/extract" -H "Content-Type: application/json"
 
 如有任何问题或建议，请通过以下方式联系我们：
 
-- 邮箱: support@example.com
-- 电话: +1234567890
-- 官方网站: [https://www.example.com](https://www.example.com)
+- 邮箱: ch824783054@gmail.com
+- 电话: +86 18883179204
 
 # 许可协议
 
-本项目采用MIT许可证，详情请参阅 [LICENSE](./LICENSE)。
+本项目采用Apache-2.0许可证，详情请参阅 [LICENSE](./LICENSE)。
 
