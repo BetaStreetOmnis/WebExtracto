@@ -1,8 +1,30 @@
-# LLM搜索工具 - 智能网站内容分析与提取平台
+# 网站内容提取与分析工具
 
-这是一个基于FastAPI开发的高性能网站内容提取和分析工具。它提供了强大的API接口，能帮助用户自动化获取网站信息，提高信息收集效率，是企业调研、竞品分析、市场研究的得力助手。
+本工具是一个高效的网站内容提取与分析平台。用户可以自动化地获取企业官网信息，提升信息收集效率，是企业调研、竞品分析和市场研究的理想选择。
+
+[English Version](./readme_en.md)
+
+## 🖼️ 系统架构
+
+![系统架构图](./images/architecture.png)
+
+*图1：LLM搜索工具系统架构图*
+
+## 🎯 效果展示
+
+![效果展示](./images/demo.png)
+
+*图2：系统效果展示*
+
+## 项目初衷
+本项目初衷是我开发的一个公司官网导航的自动化采集工具，能够通过搜索引擎获取公司官网，进行内容提取和分析，最终生成公司官网导航，目前，整个自动化采集官网信息提取功能已开源，公司官网导航信息生成功能正在开发中。大模型能力的代码整理后也将开源。
+目前demo的项目地址：http://yxxt.haomiaodata.com/Marketing/company，内容是采集的公司信息并基于模型提取的，目前还是demo版本，新版本的公司官网导航仍在开发中。
+
+TODO:
+引入大模型能力以分析网站并提取有价值信息，目前仅支持公司官网原始文本内容的提取。
 
 ## 🚀 主要功能与API接口
+本项目的API接口基于FastAPI框架构建，提供高效、灵活的接口服务。
 
 ### 🔍 智能搜索引擎集成 `/search`
 - 支持Google、Bing、DuckDuckGo等主流搜索引擎
@@ -37,12 +59,6 @@
 - 支持自定义抓取规则和过滤条件
 - 提供断点续传功能
 
-## 🖼️ 系统架构
-
-![系统架构图](https://your-repo-url.com/path-to-architecture-diagram.png)
-
-*图1：LLM搜索工具系统架构图*
-
 ## ⚡ 快速开始
 
 ### 系统要求
@@ -69,146 +85,4 @@
    python api_server.py
    ```
    服务将在 [http://localhost:8093](http://localhost:8093) 启动，可通过Swagger UI查看完整API文档。
-
-## 📝 API调用示例
-
-### 1. 搜索接口调用 `/search`
-
-#### 请求示例
-```bash
-curl -X POST "http://localhost:8093/search" -H "Content-Type: application/json" -d '{
-  "keyword": "人工智能",
-  "engine_name": "google",
-  "filter_text_len": 50
-}'
-```
-
-#### 响应示例
-```json
-[
-  {
-    "href": "https://example.com/ai",
-    "title": "人工智能简介",
-    "description": "介绍人工智能的基本概念和发展历史。"
-  },
-  {
-    "href": "https://example.com/ai-applications",
-    "title": "人工智能的应用领域",
-    "description": "探讨人工智能在各个行业的应用案例。"
-  }
-]
-```
-
-### 2. 网页内容提取 `/webpage_info`
-
-#### 请求示例
-```bash
-curl -X POST "http://localhost:8093/webpage_info" -H "Content-Type: application/json" -d '{
-  "url": "https://www.example.com",
-  "tool_type": "playwright"
-}'
-```
-
-#### 响应示例
-```json
-{
-  "title": "示例网站",
-  "text": "这是一个示例网站，用于展示内容提取的功能。",
-  "soup": "<!DOCTYPE html>...</html>"
-}
-```
-
-### 3. 网站分析 `/analyze`
-
-#### 请求示例
-```bash
-curl -X POST "http://localhost:8093/analyze" -H "Content-Type: application/json" -d '{
-  "url": "https://www.example.com",
-  "useai": 1,
-  "num_level": 2,
-  "max_page": 10,
-  "need_soup": true
-}'
-```
-
-#### 响应示例
-```json
-{
-  "assets": {
-    "js": ["app.js", "utils.js"],
-    "css": ["style.css"],
-    "html": ["index.html"],
-    "php": [],
-    "images": ["logo.png", "banner.jpg"]
-  },
-  "links": {
-    "internal": ["https://www.example.com/about", "https://www.example.com/contact"],
-    "external": ["https://www.google.com", "https://www.facebook.com"],
-    "directory": ["https://www.example.com/blog/"]
-  },
-  "company_info": {
-    "social_media": ["https://twitter.com/example", "https://linkedin.com/company/example"],
-    "emails": ["contact@example.com"],
-    "phone_numbers": ["+1234567890"],
-    "addresses": ["示例市示例区示例路123号"]
-  },
-  "statistics": {
-    "js_files": 2,
-    "css_files": 1,
-    "html_files": 1,
-    "php_files": 0,
-    "images": 2,
-    "internal_links": 2,
-    "external_links": 2
-  }
-}
-```
-
-### 4. 批量内容提取 `/extract`
-
-#### 请求示例
-```bash
-curl -X POST "http://localhost:8093/extract" -H "Content-Type: application/json" -d '{
-  "url": "https://www.example.com",
-  "useai": 1,
-  "num_level": 3,
-  "max_page": 15,
-  "need_soup": false
-}'
-```
-
-#### 响应示例
-```json
-{
-  "content": [
-    {
-      "url": "https://www.example.com/page1",
-      "title": "页面1标题",
-      "text": "页面1的正文内容..."
-    },
-    {
-      "url": "https://www.example.com/page2",
-      "title": "页面2标题",
-      "text": "页面2的正文内容..."
-    }
-    // 更多页面内容
-  ],
-  "job_urls": [
-    "https://www.example.com/page1",
-    "https://www.example.com/page2"
-    // 更多URL
-  ]
-}
-```
-
-# 联系我们
-
-如有任何问题或建议，请通过以下方式联系我们：
-
-- 邮箱: ch824783054@gmail.com
-- 电话: +86 18883179204
-
-# 许可协议
-
-本项目采用Apache-2.0许可证，详情请参阅 [LICENSE](./LICENSE)。
 
