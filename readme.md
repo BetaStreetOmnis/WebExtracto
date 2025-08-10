@@ -22,8 +22,23 @@
 http://yxxt.haomiaodata.com/
 内容是采集的公司信息并基于模型提取的，目前还是demo版本，新版本的公司官网导航仍在开发中。
 
-TODO:
-引入大模型能力以分析网站并提取有价值信息，目前仅支持公司官网原始文本内容的提取。
+## 🤖 AI功能特性
+
+### 🧠 智能内容处理
+- **内容总结**: 自动生成网页内容的简洁总结
+- **关键信息提取**: 智能提取公司名称、主营业务、联系方式等关键信息
+- **内容分类**: 自动对网页内容进行分类标签
+- **商业洞察**: 生成深度的商业分析和洞察
+
+### 🔄 多种AI模型支持
+- **OpenAI GPT**: 支持GPT-3.5-turbo、GPT-4等模型
+- **本地模型**: 支持ChatGLM2、LLaMA等本地部署模型
+- **灵活配置**: 可自定义模型参数和配置
+
+### 📊 网站比较分析
+- **竞品分析**: 自动比较两个网站的特点和差异
+- **业务模式对比**: 分析不同企业的业务模式
+- **市场定位**: 评估企业的市场定位和竞争优势
 
 ## 🚀 主要功能与API接口
 本项目的API接口基于FastAPI框架构建，提供高效、灵活的接口服务。
@@ -34,7 +49,6 @@ TODO:
 - 返回结构化的搜索结果，包含URL、标题和描述
 - 自动过滤无关内容，精准定位目标信息
 - 支持关键词搜索和高级搜索语法
-
 
 ### 📄 网页内容智能提取 `/webpage_info`
 - 支持多种解析工具 (`requests`/`selenium`/`playwright`)
@@ -62,6 +76,69 @@ TODO:
 - 支持自定义抓取规则和过滤条件
 - 提供断点续传功能
 
+### 🤖 AI智能处理接口
+
+#### `/ai/extract_and_process` - 一键提取+AI处理
+```bash
+POST /ai/extract_and_process
+{
+    "url": "https://example.com",
+    "max_page": 20,
+    "need_soup": false
+}
+```
+- 自动提取网站内容并用AI处理
+- 返回原始内容和AI分析结果
+- 包含总结、关键信息、分类、洞察等
+
+#### `/ai/process` - AI内容处理
+```bash
+POST /ai/process
+{
+    "content": [{"title": "...", "text": "..."}],
+    "process_type": "all",  # all, summary, key_info, categories, insights
+    "max_summary_length": 500
+}
+```
+- 对已有内容进行AI处理
+- 支持多种处理类型
+- 可自定义处理参数
+
+#### `/ai/compare` - 网站比较分析
+```bash
+POST /ai/compare
+{
+    "website1_url": "https://company1.com",
+    "website2_url": "https://company2.com",
+    "max_page": 20
+}
+```
+- 自动比较两个网站的特点
+- 生成详细的对比分析报告
+- 支持竞品分析和市场研究
+
+#### `/ai/config` - AI配置管理
+```bash
+POST /ai/config
+{
+    "model_name": "gpt-3.5-turbo",
+    "max_tokens": 2000,
+    "temperature": 0.7,
+    "use_local_model": false
+}
+```
+- 动态配置AI模型参数
+- 支持切换不同AI模型
+- 实时调整处理参数
+
+#### `/ai/status` - AI状态查询
+```bash
+GET /ai/status
+```
+- 查询当前AI处理器状态
+- 显示当前配置信息
+- 检查模型可用性
+
 ## ⚡ 快速开始
 
 ### 系统要求
@@ -70,6 +147,7 @@ TODO:
 - Chrome浏览器（用于Selenium和Playwright渲染）
 - 至少2GB可用内存
 - 稳定的网络连接
+- OpenAI API密钥（可选，用于AI功能）
 
 ### 🔧 安装步骤
 
@@ -83,9 +161,111 @@ TODO:
    pip install -r requirements.txt
    ```
 
-3. 启动API服务:
+3. 配置环境变量:
+   ```bash
+   cp .env.example .env
+   # 编辑 .env 文件，设置你的OpenAI API密钥
+   ```
+
+4. 启动API服务:
    ```bash
    python api_server.py
    ```
    服务将在 [http://localhost:8093](http://localhost:8093) 启动，可通过Swagger UI查看完整API文档。
+
+### 🤖 AI功能配置
+
+#### 使用OpenAI API
+1. 获取OpenAI API密钥
+2. 在 `.env` 文件中设置：
+   ```
+   OPENAI_API_KEY=your_api_key_here
+   AI_USE_LOCAL_MODEL=false
+   ```
+
+#### 使用本地模型
+1. 下载本地模型（如ChatGLM2）
+2. 在 `.env` 文件中设置：
+   ```
+   AI_USE_LOCAL_MODEL=true
+   AI_LOCAL_MODEL_PATH=/path/to/your/model
+   ```
+
+### 📝 使用示例
+
+#### 基本AI处理
+```python
+import requests
+
+# 提取网站内容并用AI处理
+response = requests.post("http://localhost:8093/ai/extract_and_process", json={
+    "url": "https://example.com",
+    "max_page": 10
+})
+
+result = response.json()
+print("内容总结:", result['ai_analysis']['summary'])
+print("关键信息:", result['ai_analysis']['key_info'])
+```
+
+#### 网站比较
+```python
+# 比较两个网站
+response = requests.post("http://localhost:8093/ai/compare", json={
+    "website1_url": "https://company1.com",
+    "website2_url": "https://company2.com"
+})
+
+comparison = response.json()
+print("比较分析:", comparison['comparison'])
+```
+
+运行完整示例：
+```bash
+python examples/ai_usage_example.py
+```
+
+## 🔧 配置说明
+
+### 环境变量配置
+- `OPENAI_API_KEY`: OpenAI API密钥
+- `AI_MODEL_NAME`: AI模型名称（默认: gpt-3.5-turbo）
+- `AI_MAX_TOKENS`: 最大token数（默认: 2000）
+- `AI_TEMPERATURE`: 模型温度参数（默认: 0.7）
+- `AI_USE_LOCAL_MODEL`: 是否使用本地模型（默认: false）
+- `AI_LOCAL_MODEL_PATH`: 本地模型路径
+
+### API参数说明
+- `process_type`: 处理类型（all/summary/key_info/categories/insights）
+- `max_summary_length`: 总结最大长度
+- `max_page`: 最大抓取页面数
+- `temperature`: AI模型温度参数
+
+## 📊 性能优化
+
+### AI处理优化
+- 支持批量处理多个页面
+- 智能文本去重和清理
+- 可配置的处理参数
+- 错误重试机制
+
+### 内存管理
+- 分页处理大量内容
+- 智能缓存机制
+- 内存使用监控
+
+## 🔒 安全考虑
+
+- API密钥安全存储
+- 请求频率限制
+- 内容过滤和清理
+- 错误信息脱敏
+
+## 🤝 贡献指南
+
+欢迎提交Issue和Pull Request来改进项目！
+
+## 📄 许可证
+
+本项目采用MIT许可证，详见 [LICENSE](LICENSE) 文件。
 
