@@ -16,7 +16,7 @@ This tool is an efficient platform for website content extraction and analysis. 
 
 ## Project Origin
 The initial purpose of this project was to develop an automated tool for collecting company website navigation. It can obtain company websites through search engines, extract and analyze content, and finally generate company website navigation. Currently, the entire automated collection and website information extraction function has been open-sourced, and the company website navigation information generation function is under development. The code for the large model capabilities will also be open-sourced after sorting.
-The current demo project address: http://yxxt.haomiaodata.com/Marketing/company, the content is the company information collected and extracted based on the model. It is still a demo version, and the new version of the company website navigation is still under development.
+The marketing site entry is http://yxxt.haomiaodata.com/. The historical `/Marketing/company` demo route is unavailable; the company extraction workflow requires separate validation before it is advertised as a working demo.
 
 TODO:
 Introduce large model capabilities to analyze websites and extract valuable information. Currently, only the extraction of raw text content from company websites is supported.
